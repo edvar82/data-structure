@@ -1,5 +1,8 @@
 #include <stdio.h> 
 #include <time.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
 
 //Bubblesort, selectionSort, QuickSort, MergeSort, radix, bin, shell e insert
 
@@ -23,12 +26,18 @@ void bubbleSort(int numeros[], int n) {
 void bubbleSort2(int numeros[], int n) {
     int i, j, aux;
     for(i = n - 1; i >0; i--){
+        int troca = 0;
         for (j = 0; j < i; j++) { //MUDANÇA no for** não precisa percorrer o vetor inteiro
             if (numeros[j] > numeros[j + 1]) {
                 aux = numeros[j];
                 numeros[j] = numeros[j + 1];
                 numeros[j + 1] = aux;
+
+                troca = 1;
             }
+        }
+        if(troca == 0){
+            break;
         }
     }
 }
@@ -126,6 +135,26 @@ void quickSort7(int numeros[], int inicio, int fim) {
     }
     if (i < fim) {
         quickSort7(numeros, i, fim);
+    }
+}
+
+//deixar bubble sort mais eficiente
+
+void bubbleSort8(int numeros[], int n) {
+    int i, j, aux, troca;
+    for (i = 0; i < n; i++) {
+        troca = 0;
+        for (j = 0; j < n - 1; j++) { 
+            if (numeros[j] > numeros[j + 1]) {
+                aux = numeros[j];
+                numeros[j] = numeros[j + 1];
+                numeros[j + 1] = aux;
+                troca = 1;
+            }
+        }
+        if (troca == 0) { //MUDANÇA no if**
+            break;
+        }
     }
 }
 
@@ -335,4 +364,16 @@ void free(int *p) {
     }
 }
 
+int main(){
+    int valores[500];
+    int i;
+    for(i=0;i<500;i++){
+        valores[i]=rand()%500;
+    }
+    clock_t t;
+    t = clock();
+    bubbleSort8(valores,500);
+    t = clock() - t;
+    printf("Tempo de execucao: %f\n",((float)t)/CLOCKS_PER_SEC);
+}
   
